@@ -9,7 +9,7 @@
     <p class="text-gray-400">{{ __(translate('voucher_and_phone_enter')) }}</p>
 
     <!-- Forma -->
-    <form action="{{ route('checkVacherPage') }}" method="POST" id="voucherForm" class="space-y-4">
+    <form action="{{ route('checkVacher') }}" method="POST" id="voucherForm" class="space-y-4">
         @csrf
         <div>
             <label for="phone" class="block text-sm mb-2 text-left">
@@ -30,12 +30,16 @@
 
         <div class="flex flex-col space-y-2 text-gray-500">
             <div class="flex items-center space-x-3">
-                <input id="acceptTerms" class="checkbox" name="acceptTerms" type="checkbox"
-                    class="border-gray-300 rounded shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                              {{ $errors->has('acceptTerms') ? 'border-red-500' : '' }}"
-                    value="1" {{ old('acceptTerms') ? 'checked' : '' }}>
-                <label for="acceptTerms" class="text-gray-700 cursor-pointer">
-                    Accept Privacy Policy & Terms
+                <input id="acceptTerms" 
+                name="acceptTerms" 
+                type="checkbox" 
+                class="border-gray-300 w-4 h-4 rounded shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50 
+                       {{ $errors->has('acceptTerms') ? 'border-red-500' : '' }}"
+                value="1" 
+                {{ old('acceptTerms') ? 'checked' : '' }}>
+         
+                <label for="" onClick="openModal()" class="text-gray-500 cursor-pointer">
+                    {{ __(translate('accept_privacy_policy')) }}
                 </label>
             </div>
 
@@ -51,5 +55,9 @@
             {{ __(translate('confirm')) }}
         </button>
     </form>
+
+    @include('partials.policy', [
+        'policy' => $policy
+    ])
 
 @endsection

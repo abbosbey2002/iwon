@@ -78,40 +78,7 @@ class SoloQuery
         }
     }
 
-    public function authenticateUser(LoginRequest $request): array
-    {
-        $endpoint = '/login';
-        $payload = [
-            'username' => $request->getLogin(),
-            'password' => $request->getPassword(),
-            'timestamp' => time(),
-        ];
-        $response = $this->sendRequest($payload, 'POST', $endpoint);
-
-        if ($response['status'] === 200) {
-            $this->cookieHelper->setUserCredentials($request->getLogin(), $request->getPassword(), $request->getRemember());
-        }
-
-        return $response;
-    }
-
-    public function fetchVouchers(VoucherRequest $request): array
-    {
-        $endpoint = '/hotel/voucher/list';
-        $payload = [
-            'username' => $this->cookie->getLogin(),
-            'password' => $this->cookie->getPassword(),
-            'date_begin' => $date_begin,
-            'date_end' => $date_end,
-            'page_number' => $request->getPage(),
-            'page_limit' => $request->getLimit(),
-            'query_form' => $query_form,
-            'unixtime' => time(),
-        ];
-
-        return $this->sendRequest($payload, 'POST', $endpoint);
-    }
-
+   
     public function searchVouchers(SearchRequest $request): array
     {
         $endpoint = '/hotel/voucher/search';
@@ -135,16 +102,16 @@ class SoloQuery
     public function storeVoucher(string $phone)
     {
         $checkcustomer = $this->customerExists($phone);
-        // if($checkcustomer){
-        //     return ['status' => 200, 'body' => $checkcustomer->toArray()];
-        // }
+        if($checkcustomer){
+            return ['status' => 200, 'body' => $checkcustomer->toArray()];
+        }
         
         $days = Settings::first()->expired_date ? Settings::first()->expired_date : 30;
         
         $endpoint = '/hotel/voucher/new';   
         $payload = [
-            'username' => 'TTP190000362',
-            'password' => '4444',
+            'username' => 'TTP190000365',
+            'password' => '5555',
             'phone' => $phone,
             'visitor' => 'testing visitor',
             'room' => 12,
@@ -156,10 +123,11 @@ class SoloQuery
         ];
         
         $response = $this->sendRequest($payload, 'POST', $endpoint);
-                
         if ($response['status'] === 200) {
             $response['body'] = array_merge($response['body'], $payload);
             $customer = $this->savecustomer($response['body']);
+            return $response;
+        }else{
             return $response;
         }
 

@@ -8,6 +8,7 @@ use App\Models\Language;
 use App\Services\Query\IwonQuery;
 use App\Services\Query\SoloQuery;
 use Illuminate\Http\Request;
+use App\Models\Policy;
 use App\Services\Query\AuthQuery;
 
 class ConnectionController extends Controller
@@ -32,12 +33,19 @@ class ConnectionController extends Controller
 
     public function getVoucher()
     {
-        return view('auth.get_voucher');
+        $policy = Policy::first();
+        $policys = Policy::all();
+        return view('auth.get_voucher', compact('policy'));
     }
 
-    public function checkVacherPage(PhoneRequest $request)
+    public function checkVacherPage()
     {
+        return view('auth.check_vacher');
+    }
+
+    public function checkVoucher(PhoneRequest $request){
         $phone = $request->getphone();
+
         
         $iscleint = $this->iwonapi->isClient($phone);
 
@@ -53,8 +61,9 @@ class ConnectionController extends Controller
             $phone = $body['phone'];
             $this->iwonapi->sendVoucherClient( $phone, $voucher_id );
             return view('auth.check_vacher', compact('phone'));
+        }else{
+            return redirect()->back()->with('phone_error', $voucher['body']['errMsg']);
         }
-
     }
 
 public function connect(LoginRequest $request)
@@ -64,13 +73,18 @@ public function connect(LoginRequest $request)
 
         $response = $this->authquery->login($request);
         
-        dd($response);
         if ($response['status'] == 200) {   
             $message = $this->errors->message($response['body']['items']['v_status']);
-
-            return redirect()->route('ads.view');
+            return redirect()->route('success.view');
+        }else{
+            return to_route('checkVacherPage')->with('phone_error', $response['body']['errMsg']);
         }
 
+    }
+
+    public function success()
+    {
+        return view('auth.success');
     }
 
     public function setLocale(Request $request)

@@ -21,6 +21,7 @@ class IwonQuery
      */
     public  function isClient(string $phone): bool
     {
+        
         try {
             $response = Http::withBasicAuth($this->username, $this->password)
                 ->post($this->apiUrl.'v1/wallet3/sola/voucher/check-number', [

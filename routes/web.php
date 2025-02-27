@@ -33,9 +33,11 @@ Route::middleware('guest')->group(function () {
 Route::get('/', [ConnectionController::class, 'index'])->name('home');
 Route::post('/set-locale', [ConnectionController::class, 'setLocale'])->name('set-locale');
 
-Route::post('/vaucher', [ConnectionController::class, 'checkVacherPage'])->name('checkVacherPage');
+Route::post('/vaucher', [ConnectionController::class, 'checkVoucher'])->name('checkVacher');
+Route::get('/check-voucher', [ConnectionController::class, 'checkVacherPage'])->name('checkVacherPage');
 Route::post('/connect', [ConnectionController::class, 'connect'])->name('connect');
 Route::get('/get-voucher', [ConnectionController::class, 'getVoucher'])->name('getvoucher');
+Route::get('/success', [ConnectionController::class, 'success'])->name('success.view');
 Route::get('/ads', [AdsController::class, 'view'])->name('ads.view');
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -54,6 +56,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::resource('translations', TranslationController::class);
     Route::post('translations-update', [TranslationController::class, 'updatestring'])->name('translations_update');
     Route::resource('settings', SettingsController::class);
+
+    Route::get('policy', [DashboardController::class, 'policy'])->name('admin.policy.index');
+    Route::put('policy', [DashboardController::class, 'policyUpdate'])->name('admin.policy.update');
 
     Route::resource('ads', AdsController::class);
     Route::get('/status/{status}/{ad}', [AdsController::class, 'status'])->name('admin.ads.status');

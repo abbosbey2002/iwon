@@ -20,8 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::middleware('basic.auth')->group(function () {
-    Route::post('/voucher/create', [IwonController::class, 'store']);
+Route::middleware('basic.auth')->prefix('voucher')->group(function () {
+    Route::post('/create', [IwonController::class, 'store']);
 });
 
 

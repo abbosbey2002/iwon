@@ -21,7 +21,7 @@ class LoginRequest extends FormRequest
 
     public function getPhone(): int
     {
-        return (int) str_replace([' ', '+', '(', ')'], '', $this->get('phone'));
+        return  '+998'.str_replace(' ', '', $this->phone);
     }
 
     public function getVoucherID(): int

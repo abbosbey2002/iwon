@@ -5,7 +5,7 @@
 @section('content')
 
 
-    <div class="grid gap-5 lg:gap-7.5 xl:w-[38.75rem] mx-auto hidden">
+    <div class="grid gap-5 lg:gap-7.5 xl:w-[38.75rem] mx-auto ">
         <div class="card pb-2.5">
             <div class="card-header" id="password_settings">
                 <h3 class="card-title">
@@ -80,15 +80,15 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th class="min-w-40 text-center">
+                            key
+                        </th>
                         @foreach ($languages as $lang)
                             <th class="min-w-40 text-center">
                                 {{ $lang->name }}
                             </th>
                         @endforeach
-                        <th class="min-w-40 text-center">
-                            key
-                        </th>
-
+                        
                         {{-- <th>Action</th> --}}
                     </tr>
                 </thead>

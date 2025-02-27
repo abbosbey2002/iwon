@@ -18,7 +18,8 @@
             </label>
             <div class="flex items-center bg-gray-700 rounded-lg p-3">
                 <span class="text-gray-400 px-2">+998</span>
-                <input type="text" id="phone" name="phone" maxlength="12" minlength="12" value="{{$phone}}"
+                <input type="text" id="phone" name="phone" maxlength="12" minlength="12"value="{{ isset($phone) ? substr($phone, 3) : '' }}"
+
                     class="bg-transparent flex-1 text-white focus:outline-none" placeholder="XX XXX XX XX" required />
             </div>
         </div>
@@ -33,12 +34,21 @@
                 placeholder="{{ __(translate('enter_voucher')) }}" required />
         </div>
 
+                @error('phone')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+            @enderror
+            @if (session('phone_error'))
+            <p class="text-red-500 text-sm">{{ session('phone_error') }}</p>
+            @endif
+
+      
+
         <div class="flex justify-between">
             <p class="text-gray-500"> {{ __(translate('you_have_no_voucher')) }}</p>
             <a href="{{ route('getvoucher') }}" id="getVoucher" class="underline cursor-pointer">
                 {{ __(translate('get_voucher')) }}</a>
-            <p id="timecontent" class="hidden">{{ __('auth.time') }} 00:<span
-                    id="timer">{{ site_settings('sms_time') }}</span></p>
+            {{-- <p id="timecontent" class="hidden">{{ __('auth.time') }} 00:<span
+                    id="timer">{{ site_settings('sms_time') }}</span></p> --}}
         </div>
 
         <!-- Tasdiqlash tugmasi -->

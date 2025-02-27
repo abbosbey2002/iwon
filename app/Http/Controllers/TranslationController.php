@@ -18,8 +18,6 @@ class TranslationController extends Controller
         }
         $languages = Language::all();
         $translations = Translation::where('language_code', app()->getLocale())->get();
-
-        // dd($translations);
         return view('admin.languages.translations', compact('translations', 'languages', 'translation'));
     }
 
@@ -44,7 +42,6 @@ class TranslationController extends Controller
 
     public function update(UpdateTranslationRequest $request, Translation $translation)
     {
-        dd($request->all());
         $translation->update($request->validated());
 
         return redirect()->route('translations.index')->with('success', 'Translation updated successfully.');

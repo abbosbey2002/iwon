@@ -53,6 +53,13 @@
                         'icon' => 'la-basketball-ball',
                     ])
 
+                    @include('core.single_menu_item', [
+                        'name' => 'Policy',
+                        'route' => route('admin.policy.index'),
+                        'icon' => 'la-basketball-ball',
+                    ])
+
+
 
                 </div>
                 <!-- End of Sidebar Menu -->

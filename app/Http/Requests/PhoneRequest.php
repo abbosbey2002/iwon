@@ -22,7 +22,7 @@ class PhoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required',
+            'phone' => 'required|max:12|min:12',
             'acceptTerms' => 'required|accepted',
         ];
     }

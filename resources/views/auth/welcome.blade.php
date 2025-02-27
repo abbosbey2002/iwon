@@ -32,5 +32,9 @@
         <a href="{{route('getvoucher')}}" id="nextStepButton" class="w-full block bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold">
             {{__(translate('get_voucher'))}}
         </a>
+
+        <a href="{{route('checkVacherPage')}}" id="nextStepButton" class="w-full flex items-center space-x-3 gap-2 justify-center bg-purple-600 hover:bg-purple-700 mt-3 text-white py-3 rounded-lg font-semibold">
+            {{__(translate('use_voucher_btn'))}} <img width="20" src="{{asset('images/wfsets.webp')}}" alt="" />
+        </a>
     </div>
 @endsection
