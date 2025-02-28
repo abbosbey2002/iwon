@@ -221,6 +221,8 @@ class TranslationSeeder extends Seeder
                 'language_code' => 'uz',
                 'text' => 'Qaytadan yuborish',
             ],
+
+            
         ];
 
         foreach ($translations as $translation) {
